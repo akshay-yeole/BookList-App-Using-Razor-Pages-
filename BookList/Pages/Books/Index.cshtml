@@ -1,0 +1,71 @@
+﻿@page
+@model BookList.Pages.Books.IndexModel
+@{
+
+}
+
+<br />
+
+<div class="container row p-0 m-0">
+    <div class="col-10">
+        <h2 class="text-info">BookList</h2>
+    </div>
+    <div class="col-2">
+        <a asp-page="AddBook" class="btn btn-info form-control text-white">Create New Book</a>
+    </div>
+
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.AllBooks.Count() > 0)
+            {
+                <table class="table table-striped bordered">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="AllBooks.FirstOrDefault().Id"></label>
+                        </th>
+                        <th>
+                            <label asp-for="AllBooks.FirstOrDefault().Name"></label>
+                        </th>
+                        <th>
+                            <label asp-for="AllBooks.FirstOrDefault().Author"></label>
+                        </th>
+                        <th>
+                            <label asp-for="AllBooks.FirstOrDefault().Quantity"></label>
+                        </th>
+                        <th>
+                            <label>Actions</label>
+                        </th>
+                    </tr>
+                    @foreach (var bookdetails in Model.AllBooks)
+                    {
+                <tr class="">
+                    <td>
+                        @Html.DisplayFor(m => bookdetails.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => bookdetails.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => bookdetails.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => bookdetails.Quantity)
+                    </td>
+                    <td>
+                        <button asp-page-handler="Delete" asp-route-id="@bookdetails.Id" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm">Delete</button>
+                        <a asp-page="EditBook" asp-route-id="@bookdetails.Id" class="btn btn-success btn-sm text-white">Edit</a>
+                    </td>
+                </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No Books Avail.</p>
+            }
+        </form>
+    </div>
+  
+@section scripts{ 
+    <script src="~/js/booklist.js"></script>
+}
